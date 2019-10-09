@@ -23,6 +23,8 @@ public class Book {
     private String description = "";
     private double price = 0.0;
     private int isInStock = 0;
+
+    @ManyToOne()
     private Author author;
 
     public Book() {
@@ -74,5 +76,13 @@ public class Book {
 
     public void setIsInStock(int isInStock) {
         this.isInStock = isInStock;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 }

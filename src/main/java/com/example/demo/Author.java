@@ -35,4 +35,12 @@ public class Author {
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 }
