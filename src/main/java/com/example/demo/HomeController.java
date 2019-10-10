@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 public class HomeController {
@@ -89,8 +90,39 @@ public class HomeController {
     @RequestMapping("/delete/{id}")
     public String delAuthor(@PathVariable("id") long id){
         System.out.println("HomeController: Delete Author with id: " + id);
-        authorRepository.deleteById(id);
-        return "index";
+        try {
+            long count = bookRepository.count();
+//            Iterable<Customer> findAllByLastNameContainingIgnoreCase(String lastName);
+            //Iterable<Book> findByAuthor(Author author);
+            Author author = authorRepository.findByAuthorID(id);
+            ArrayList<Book> results1 = (ArrayList<Book>)bookRepository.findByAuthor(author);
+            if (results1.size()>0){
+                System.out.println("Results1: Cannot Delete this author as it is in use. Author ID: " + id);
+                return "redirect:/";
+            }
+            else {
+                System.out.println("Results1: Number of Books found with this author : " + results1.size());
+            }
+
+//            ArrayList<Book> results = (ArrayList<Book>) bookRepository.findAll();
+//            for (int i=0; i<results.size(); i++){
+//                if (id == results.get(i).getAuthor().getAuthorID()){
+//                    System.out.println("Cannot Delete this author as it is in use. Author ID: " + id);
+//                    return "redirect:/";
+//                }
+//            }
+//            if (results.size() == 0) {
+//                authorRepository.deleteById(id);
+//            } else {
+//                System.out.println("HomeController: delAuthor: " + "Cannot Delete Author as it is currently assigned to a book");
+//            }
+            authorRepository.deleteById(id);
+        }
+        catch (Exception e){
+            System.out.println("HomeController:delAuthor: " + e.getMessage());
+        }
+//        return "index";
+        return "redirect:/";
     }
 
     @RequestMapping("/detail_book/{id}")
@@ -108,17 +140,23 @@ public class HomeController {
     }
 
     @RequestMapping("/delete_book/{id}")
-    public String delBook(@PathVariable("id") long id){
+    public String delBook(@PathVariable("id") long id, Model model){
         System.out.println("HomeController: Delete Book with id: " + id);
 //        bookRepository.delete(bookRepository.findById(id));
+
+        try {
+            bookRepository.deleteById(id);
+        }
+        catch (Exception e){
+            System.out.println("HomeController:delete_book: " + e.getMessage());
+        }
+
         if (bookRepository.existsById(id)){
             System.out.println("HomeController: delete_book: Book exists with id: " + id);
         }
         else {
             System.out.println("HomeController: delete_book: Book does Not exist with id: " + id);
         }
-
-        bookRepository.deleteById(id);
         return "redirect:/";
 //        return "index";
     }

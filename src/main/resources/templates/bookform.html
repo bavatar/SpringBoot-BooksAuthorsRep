@@ -3,12 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Book</title>
-
-    <!--Bootstrap CSS-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <div th:insert="base::header"></div>
+    <style>
+        .button {
+            /*background-color: #4CAF50;*/
+            background-color: steelblue;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: seagreen">
 <div th:replace="base :: navlinks"></div>
 
 <!--private String sku = "";-->
@@ -16,33 +28,74 @@
 <!--private String description = "";-->
 <!--private double price = 0.0;-->
 <!--private int isInStock = 0;-->
+<br>
+<div class="container" style="background-color: azure">
 
-<form action="#" th:action="@{/process_book}" th:object="${book}" method="post">
-    <input type="hidden" th:field="*{bookID}">
-
-    Book Title: <input type="text" th:field="*{title}"><br />
-    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span><br />
-
-    SKU: <input type="text" th:field="*{sku}"><br />
-    <span th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"></span><br />
-
-    Description: <input type="text" th:field="*{description}"><br />
-    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span><br />
-
-    Price: <input type="number" th:field="*{price}"><br />
-    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span><br />
-
-    In Stock: <input type="number" th:field="*{isInStock}"><br />
-    <span th:if="${#fields.hasErrors('isInStock')}" th:errors="*{isInStock}"></span><br />
-
-    <select name="author" th:field="*{author}">
-        <option th:each="author : ${authors}"
-                th:value="${author.authorID}"
-                th:text="${author.authorName}"></option>
-    </select>
-    <input type="submit" value="Submit">
-</form>
-
+    <center><h3>Add a Book</h3></center>
+    <table align="center" border="1">
+    <form action="#" th:action="@{/process_book}" th:object="${book}" method="post">
+        <input type="hidden" th:field="*{bookID}">
+        <tr>
+            <td>
+                Book Title:
+            </td>
+            <td>
+                <input type="text" th:field="*{title}"><br />
+                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                SKU:
+            </td>
+            <td><input type="text" th:field="*{sku}"><br />
+                <span th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description:
+            </td>
+            <td>
+                <input type="text" th:field="*{description}">
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span><br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Price:
+            </td>
+            <td>
+                <input type="number" th:field="*{price}">
+                <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                In Stock:
+            </td>
+            <td>
+                <input type="number" th:field="*{isInStock}">
+                <span th:if="${#fields.hasErrors('isInStock')}" th:errors="*{isInStock}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <select name="author" th:field="*{author}">
+                    <option th:each="author : ${authors}"
+                            th:value="${author.authorID}"
+                            th:text="${author.authorName}"></option>
+                </select>
+            </td>
+            <td align="center">
+                <input type="submit" value="Submit">
+            </td>
+        </tr>
+    </form>
+    </table>
+    <br>
+</div>
+<br>
 <!--Bootstrap JS-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
