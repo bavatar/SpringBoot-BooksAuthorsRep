@@ -11,17 +11,29 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 
-
+<!--private String sku = "";-->
+<!--private String title = "";-->
+<!--private String description = "";-->
+<!--private double price = 0.0;-->
+<!--private int isInStock = 0;-->
 
 <form action="#" th:action="@{/process_book}" th:object="${book}" method="post">
     <input type="hidden" th:field="*{bookID}">
 
-    Book Name: <input type="text" th:field="*{bookName}"><br />
-    <span th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}"></span><br />
+    Book Title: <input type="text" th:field="*{title}"><br />
+    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span><br />
 
     SKU: <input type="text" th:field="*{sku}"><br />
     <span th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"></span><br />
 
+    Description: <input type="text" th:field="*{description}"><br />
+    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span><br />
+
+    Price: <input type="number" th:field="*{price}"><br />
+    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span><br />
+
+    In Stock: <input type="number" th:field="*{isInStock}"><br />
+    <span th:if="${#fields.hasErrors('isInStock')}" th:errors="*{isInStock}"></span><br />
 
     <select name="author" th:field="*{author}">
         <option th:each="author : ${authors}"

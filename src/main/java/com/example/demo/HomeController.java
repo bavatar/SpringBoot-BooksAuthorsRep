@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+@Controller
 public class HomeController {
     @Autowired
     BookRepository bookRepository;
@@ -21,7 +23,7 @@ public class HomeController {
     public String home(Model model){
        model.addAttribute("authors", authorRepository.findAll());
        model.addAttribute("books", bookRepository.findAll());
-        return "index";
+       return "index";
     }
 
     @GetMapping("/addauthor")
@@ -59,6 +61,7 @@ public class HomeController {
         if (result.hasErrors()){
             return "bookform";
         }
+        System.out.println("HomeController:process_book: save book: " + book.getTitle());
         bookRepository.save(book);
 
         return "redirect:/booklist";
@@ -85,6 +88,7 @@ public class HomeController {
 
     @RequestMapping("/delete/{id}")
     public String delAuthor(@PathVariable("id") long id){
+        System.out.println("HomeController: Delete Author with id: " + id);
         authorRepository.deleteById(id);
         return "index";
     }
@@ -104,8 +108,18 @@ public class HomeController {
     }
 
     @RequestMapping("/delete_book/{id}")
-    public String delBooki(@PathVariable("id") long id){
+    public String delBook(@PathVariable("id") long id){
+        System.out.println("HomeController: Delete Book with id: " + id);
+//        bookRepository.delete(bookRepository.findById(id));
+        if (bookRepository.existsById(id)){
+            System.out.println("HomeController: delete_book: Book exists with id: " + id);
+        }
+        else {
+            System.out.println("HomeController: delete_book: Book does Not exist with id: " + id);
+        }
+
         bookRepository.deleteById(id);
-        return "index";
+        return "redirect:/";
+//        return "index";
     }
 }

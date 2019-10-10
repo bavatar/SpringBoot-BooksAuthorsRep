@@ -18,6 +18,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookID;
+
     private String sku = "";
     private String title = "";
     private String description = "";
